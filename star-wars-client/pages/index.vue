@@ -2,7 +2,7 @@
   <div class="index">
     <div class="index__scroll">
       <header class="container">
-        <h1>Star Wars Microservices</h1>
+        <h1 class="index__title">Star Wars Microservices</h1>
       </header>
       <main class="container main">
         <section class="main__col">
@@ -72,6 +72,12 @@
     overflow-y: scroll;
   }
 
+  .index__title{
+    font-family: "Starjhol", sans-serif;;
+    color: rgb(255, 232, 31);
+    font-size: 48px;
+  }
+  
   .container {
     max-width: 900px;
     width: 100%;
