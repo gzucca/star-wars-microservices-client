@@ -1,0 +1,84 @@
+body {
+  color: white;
+  margin: 0;
+
+  .stars,
+  .twinkling,
+  .clouds {
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .stars {
+    z-index: 0;
+    background: #000 url("https://i.imgur.com/YKY28eT.png") repeat top center;
+  }
+
+  .twinkling {
+    z-index: 1;
+    background: transparent url("https://i.imgur.com/XYMF4ca.png") repeat top
+      center;
+    animation: move-twink-back 1000s linear infinite;
+  }
+
+  .clouds {
+    z-index: 2;
+    background: transparent url("https://i.imgur.com/mHbScrQ.png") repeat top
+      center;
+    animation: move-clouds-back 200s linear infinite;
+  }
+
+  @keyframes move-twink-back {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: -10000px 5000px;
+    }
+  }
+
+  @keyframes move-clouds-back {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: 10000px 0;
+    }
+  }
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: linear-gradient(
+      90deg,
+      rgba(0, 31, 255, 1) 0%,
+      rgba(255, 255, 255, 1) 50%,
+      rgba(0, 31, 255, 1) 100%
+    );
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+      90deg,
+      rgba(42, 42, 42, 1) 0%,
+      rgba(22, 22, 22, 1) 50%,
+      rgba(42, 42, 42, 1) 100%
+    );
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
