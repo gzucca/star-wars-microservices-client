@@ -1,8 +1,8 @@
 <template>
-  <div class="index">
-    <div class="index__scroll">
+  <div class="home">
+    <div class="home__scroll">
       <header class="container">
-        <h1 class="index__title">Star Wars Microservices</h1>
+        <h1 class="home__title">Star Wars Microservices</h1>
       </header>
       <main class="container main">
         <section class="main__col">
@@ -35,6 +35,7 @@
   <div class="stars"></div>
   <div class="twinkling"></div>
   <div class="clouds"></div>
+  <nuxt-img src="/client-bg-2.png" class="background" />
 </template>
 
 <script setup>
@@ -55,7 +56,16 @@
 </script>
 
 <style scoped>
-  .index {
+  .background {
+    width: 100%;
+    z-index: 1;
+    bottom: 0;
+    position: absolute;
+    opacity: 0;
+    overflow: hidden;
+    object-fit: cover;
+  }
+  .home {
     position: absolute;
     display: block;
     top: 0;
@@ -67,15 +77,17 @@
     overflow: hidden;
   }
 
-  .index__scroll {
+  .home__scroll {
     overflow-y: scroll;
     height: 100%;
+    overflow-x: hidden;
   }
 
-  .index__title {
+  .home__title {
     font-family: "Starjhol", sans-serif;
     color: rgb(255, 232, 31);
-    font-size: 48px;
+    font-size: clamp(2rem, 1.4886rem + 2.1818vw, 3.125rem);
+    text-align: center;
   }
 
   .container {
@@ -99,8 +111,9 @@
   }
 
   .main__col__title {
-    font-size: 34px;
+    font-size: clamp(1.75rem, 1.5227rem + 0.9697vw, 2.25rem);
     font-weight: 700;
+    margin: .3em 0em;
   }
 
   .main__col__list {
@@ -110,7 +123,10 @@
   }
 
   @media screen and (min-width: 900px) {
-    .index__scroll {
+    .background {
+      opacity: 100;
+    }
+    .home__scroll {
       overflow-y: auto;
     }
     .main {

@@ -3,4 +3,8 @@ export default defineNuxtConfig({
   css: [
     '@/assets/css/global.scss',
   ],
+  modules: [
+    '@nuxt/image-edge',
+  ],
+
 })
