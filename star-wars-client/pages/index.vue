@@ -6,7 +6,7 @@
       </header>
       <main class="container main">
         <section class="main__col">
-          <h2>Characters</h2>
+          <h2 class="main__col__title">Characters</h2>
           <div class="main__col__list">
             <div v-for="c in characters">
               <h3>{{ c.name }}</h3>
@@ -14,7 +14,7 @@
           </div>
         </section>
         <section class="main__col">
-          <h2>Planets</h2>
+          <h2 class="main__col__title">Planets</h2>
           <div class="main__col__list">
             <div v-for="p in planets">
               <h3>{{ p.name }}</h3>
@@ -22,7 +22,7 @@
           </div>
         </section>
         <section class="main__col">
-          <h2>Films</h2>
+          <h2 class="main__col__title">Films</h2>
           <div class="main__col__list">
             <div v-for="f in films">
               <h3>{{ f.title }}</h3>
@@ -68,16 +68,16 @@
   }
 
   .index__scroll {
-    height: 100%;
     overflow-y: scroll;
+    height: 100%;
   }
 
-  .index__title{
-    font-family: "Starjhol", sans-serif;;
+  .index__title {
+    font-family: "Starjhol", sans-serif;
     color: rgb(255, 232, 31);
     font-size: 48px;
   }
-  
+
   .container {
     max-width: 900px;
     width: 100%;
@@ -90,22 +90,28 @@
     display: flex;
     flex-direction: column;
     text-align: center;
+    background-color: purple;
   }
 
   .main__col {
-    height: 100%;
     width: 60%;
+    background-color: blue;
+  }
+
+  .main__col__title {
+    font-size: 34px;
+    font-weight: 700;
   }
 
   .main__col__list {
     overflow-y: auto;
-    height: 100%;
-    max-height: 70vh;
+    max-height: 60vh;
+    background-color: red;
   }
 
   @media screen and (min-width: 900px) {
     .index__scroll {
-      overflow-y: hidden;
+      overflow-y: auto;
     }
     .main {
       flex-direction: row;
