@@ -1,7 +1,15 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed");
+
 body {
   color: white;
   margin: 0;
-  font-family: system-ui;
+
+  @font-face {
+    font-family: "Roboto";
+    src: local("Roboto"), url(/assets/fonts/Roboto-Light.ttf) format("truetype");
+  }
+
+  font-family: "Roboto", sans-serif;
 
   @font-face {
     font-family: "Starjedi";
@@ -90,5 +98,16 @@ body {
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
+  }
+
+  @keyframes float {
+    from {
+      will-change: unset;
+      transform: translateY(-10px);
+    }
+    to {
+      will-change: transform;
+      transform: translateY(-20px);
+    }
   }
 }
