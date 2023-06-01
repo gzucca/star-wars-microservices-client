@@ -1,7 +1,7 @@
 <template>
-  <dialog id="characterDialog">
-    <Card v-bind="characters" />
-  </dialog>
+  <div v-if="state.showPopup" class="characterDialog">
+    <Card v-bind="state.character" :closePopup="closePopup" />
+  </div>
   <div class="home">
     <div class="home__scroll">
       <header class="container">
@@ -13,9 +13,10 @@
           <div class="main__col__list">
             <div v-bind="characters" v-for="character in characters">
               <h3
-                :birthYear="character.birth_year"
-                v-bind="character"
+                tabindex="0"
+                @keyup.esc="closePopup"
                 @click="(event) => handleClick(event)"
+                :_id="character._id"
                 class="main__col__list__item"
               >
                 {{ character.name }}
@@ -49,11 +50,15 @@
 </template>
 
 <script setup>
-  import { ref, provide } from "vue";
+  import { ref, reactive } from "vue";
+
+  const state = reactive({ showPopup: false, character: {} });
+
   const { data: charactersResponse } = await useFetch(
     "http://34.125.250.75:8000/characters"
   );
   const characters = ref(charactersResponse.value.data);
+  provide("characters", characters);
 
   const { data: planetsResponse } = await useFetch(
     "http://34.125.250.75:8000/planets"
@@ -66,25 +71,25 @@
   const films = filmsResponse.value.data;
 
   function handleClick(event) {
-    console.log(event);
-    characterDialog.showModal();
+    state.showPopup = !state.showPopup;
+    state.character = characters.value.find(
+      (character) => character._id === event.target.attributes._id.value
+    );
   }
 
-  const setOpened = ref(false);
+  function closePopup() {
+    state.showPopup = false;
+  }
 </script>
 
 <style scoped>
-  #characterDialog {
-    height: 60vh;
-    width: 70vw;
-    padding: 0;
-    border: solid 5px rgba(127, 222, 254, 0.875);
-    background-color: rgba(255, 255, 255, 0);
-    border-radius: 15px;
-  }
-
-  #characterDialog::backdrop {
-    background-color: rgba(0, 0, 0, 0.733);
+  .characterDialog {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    margin: auto;
+    z-index: 100;
   }
 
   .background {
@@ -162,7 +167,6 @@
     border-radius: 5px;
     padding: 6%;
     margin: 6%;
-    transform: rotateX(30deg);
     cursor: pointer;
   }
 
