@@ -1,42 +1,65 @@
 <template>
-  <div v-if="state.showPopup" class="characterDialog">
-    <Card v-bind="state.character" :closePopup="closePopup" />
+  <div v-if="state.showCharacter" class="home__card">
+    <CharacterCard v-bind="state.character" :closePopup="closePopup" />
   </div>
+  <div v-if="state.showFilm" class="home__card">
+    <FilmCard v-bind="state.film" :closePopup="closePopup" />
+  </div>
+  <div v-if="state.showPlanet" class="home__card">
+    <PlanetCard v-bind="state.planet" :closePopup="closePopup" />
+  </div>
+
   <div class="home">
     <div class="home__scroll">
       <header class="container">
         <h1 class="home__title">Star Wars Microservices</h1>
       </header>
-      <main class="container main">
-        <section class="main__col">
-          <h2 class="main__col__title">Characters</h2>
-          <div class="main__col__list">
+      <main class="container home__body">
+        <section class="home__col">
+          <h2 class="home__col__title">Characters</h2>
+          <div class="home__col__list">
             <div v-bind="characters" v-for="character in characters">
               <h3
                 tabindex="0"
                 @keyup.esc="closePopup"
-                @click="(event) => handleClick(event)"
+                @click="(event) => handleClickCharacter(event)"
                 :_id="character._id"
-                class="main__col__list__item"
+                class="home__col__item"
               >
                 {{ character.name }}
               </h3>
             </div>
           </div>
         </section>
-        <section class="main__col">
-          <h2 class="main__col__title">Planets</h2>
-          <div class="main__col__list">
-            <div v-for="p in planets">
-              <h3 class="main__col__list__item">{{ p.name }}</h3>
+        <section class="home__col">
+          <h2 class="home__col__title">Planets</h2>
+          <div class="home__col__list">
+            <div v-for="planet in planets">
+              <h3
+                tabindex="0"
+                @keyup.esc="closePopup"
+                @click="(event) => handleClickPlanet(event)"
+                :_id="planet._id"
+                class="home__col__item"
+              >
+                {{ planet.name }}
+              </h3>
             </div>
           </div>
         </section>
-        <section class="main__col">
-          <h2 class="main__col__title">Films</h2>
-          <div class="main__col__list">
-            <div v-for="f in films">
-              <h3 class="main__col__list__item">{{ f.title }}</h3>
+        <section class="home__col">
+          <h2 class="home__col__title">Films</h2>
+          <div class="home__col__list">
+            <div v-for="film in films">
+              <h3
+                tabindex="0"
+                @keyup.esc="closePopup"
+                @click="(event) => handleClickFilm(event)"
+                :_id="film._id"
+                class="home__col__item"
+              >
+                {{ film.title }}
+              </h3>
             </div>
           </div>
         </section>
@@ -46,53 +69,75 @@
   <div class="stars"></div>
   <div class="twinkling"></div>
   <div class="clouds"></div>
-  <nuxt-img src="/client-bg-2.png" class="background" />
+  <nuxt-img src="/client-bg-2.png" class="home__background-img" />
 </template>
 
 <script setup>
-  import { ref, reactive } from "vue";
+  import { ref } from "vue";
 
-  const state = reactive({ showPopup: false, character: {} });
+  const state = ref({
+    showCharacter: false,
+    showFilm: false,
+    showPlanet: false,
+    character: {},
+    film: {},
+    planet: {},
+  });
 
   const { data: charactersResponse } = await useFetch(
     "http://34.125.250.75:8000/characters"
   );
   const characters = ref(charactersResponse.value.data);
-  provide("characters", characters);
 
   const { data: planetsResponse } = await useFetch(
     "http://34.125.250.75:8000/planets"
   );
-  const planets = planetsResponse.value.data;
+  const planets = ref(planetsResponse.value.data);
 
   const { data: filmsResponse } = await useFetch(
     "http://34.125.250.75:8000/films"
   );
-  const films = filmsResponse.value.data;
+  const films = ref(filmsResponse.value.data);
 
-  function handleClick(event) {
-    state.showPopup = !state.showPopup;
-    state.character = characters.value.find(
+  function handleClickCharacter(event) {
+    state.value.character = characters.value.find(
       (character) => character._id === event.target.attributes._id.value
     );
+    state.value.showCharacter = !state.value.showCharacter;
+  }
+
+  function handleClickPlanet(event) {
+    state.value.planet = planets.value.find(
+      (planet) => planet._id === event.target.attributes._id.value
+    );
+    state.value.showPlanet = !state.value.showPlanet;
+  }
+
+  function handleClickFilm(event) {
+    state.value.film = films.value.find(
+      (film) => film._id === event.target.attributes._id.value
+    );
+    state.value.showFilm = !state.value.showFilm;
   }
 
   function closePopup() {
-    state.showPopup = false;
+    state.value.showCharacter = false;
+    state.value.showFilm = false;
+    state.value.showPlanet = false;
   }
 </script>
 
 <style scoped>
-  .characterDialog {
+  .home__card {
     height: 100vh;
     width: 100vw;
-    background-color: rgba(0, 0, 0, 0.8);
-    position: absolute;
-    margin: auto;
+    background-color: rgba(0, 0, 0, 0.9);
     z-index: 100;
+    position: relative;
+    overflow-y: auto;
   }
 
-  .background {
+  .home__background-img {
     width: 100%;
     z-index: 1;
     bottom: 0;
@@ -134,7 +179,7 @@
     align-items: center;
     justify-content: center;
   }
-  .main {
+  .home__body {
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -143,11 +188,11 @@
     border-radius: 15px;
   }
 
-  .main__col {
+  .home__col {
     width: 60%;
   }
 
-  .main__col__title {
+  .home__col__title {
     font-size: clamp(1.75rem, 1.5227rem + 0.9697vw, 2.25rem);
     font-weight: 700;
     margin: 0.3em 0em;
@@ -155,12 +200,12 @@
     cursor: default;
   }
 
-  .main__col__list {
+  .home__col__list {
     overflow-y: auto;
     max-height: 60vh;
   }
 
-  .main__col__list__item {
+  .home__col__item {
     color: #9effff;
     background: rgba(184, 237, 255, 0.1);
     border: solid 1px #9effff;
@@ -170,19 +215,19 @@
     cursor: pointer;
   }
 
-  .main__col__list__item:hover {
+  .home__col__item:hover {
     color: #c0f8f8;
     background: rgba(184, 237, 255, 0.568);
   }
 
   @media screen and (min-width: 900px) {
-    .background {
+    .home__background-img {
       opacity: 100;
     }
     .home__scroll {
       overflow-y: auto;
     }
-    .main {
+    .home__body {
       flex-direction: row;
       justify-content: space-between;
       align-items: start;
