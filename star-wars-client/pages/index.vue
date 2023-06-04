@@ -8,7 +8,6 @@
   <div v-if="state.showPlanet" class="home__card">
     <PlanetCard v-bind="state.planet" :closePopup="closePopup" />
   </div>
-
   <div class="home">
     <div class="home__scroll">
       <header class="container">
@@ -64,6 +63,12 @@
           </div>
         </section>
       </main>
+      <footer class="home__footer">
+        <h4>
+          Built with <img class="home__logo" src="@/assets/logos/vuejs.svg" /> Vue.js and <img class="home__logo"  src="@/assets/logos/google_cloud.svg" /> Google
+          Cloud Platform
+        </h4>
+      </footer>
     </div>
   </div>
   <div class="stars"></div>
@@ -134,7 +139,6 @@
     background-color: rgba(0, 0, 0, 0.9);
     z-index: 100;
     position: relative;
-    overflow-y: auto;
   }
 
   .home__background-img {
@@ -213,6 +217,16 @@
     padding: 6%;
     margin: 6%;
     cursor: pointer;
+  }
+
+  .home__footer{
+    display: flex;
+    place-content: center;
+    font-size: small;
+  }
+
+  .home__logo{
+    height: 2rem;
   }
 
   .home__col__item:hover {

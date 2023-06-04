@@ -5,15 +5,13 @@
       <p class="card__item">Opening crawl: {{ opening_crawl }}</p>
       <p class="card__item">Director: {{ director }}</p>
       <p class="card__item">Producer: {{ producer }}</p>
-      <p class="card__item">
-        Release date: {{ release_date.split("T")[0] }}
-      </p>
+      <p class="card__item">Release date: {{ release_date.split("T")[0] }}</p>
     </div>
     <div v-if="characters.length > 0">
       <h2 class="card__subtitle">Characters:</h2>
       <div class="card__list">
         <p v-for="character in characters" class="card__item">
-          {{ character.name }}
+          {{ character.name }} -
         </p>
       </div>
     </div>
@@ -32,7 +30,6 @@
     "characters",
     "closePopup",
   ]);
-
 </script>
 
 <style scoped>
@@ -46,11 +43,12 @@
     border-radius: 10px;
     padding: 1rem;
     margin: 0;
-    position: absolute;
     top: 50%;
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+    max-height: 100%;
+    overflow-y: scroll;
   }
 
   .card__title {
@@ -61,12 +59,12 @@
   .card__list {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.5rem;
   }
 
   .card__item {
-    font-weight: 500;
-    font-size: large;
+    font-weight: 400;
+    font-size: medium;
   }
 
   .card__subtitle {
@@ -89,7 +87,7 @@
   @media screen and (min-width: 900px) {
     .card__button,
     .card__item {
-      font-size: larger;
+      font-size: large;
     }
     .card__title {
       font-size: xx-large;
