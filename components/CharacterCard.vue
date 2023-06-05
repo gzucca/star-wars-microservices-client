@@ -54,7 +54,7 @@
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     max-height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   .card__title {

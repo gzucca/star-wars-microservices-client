@@ -64,10 +64,10 @@
         </section>
       </main>
       <footer class="home__footer">
-        <h4>
-          Built with <img class="home__logo" src="@/assets/logos/vuejs.svg" /> Vue.js and <img class="home__logo"  src="@/assets/logos/google_cloud.svg" /> Google
+        <a href="https://github.com/gzucca/star_wars_microservices">
+          Built with <img class="home__logo" src="@/assets/logos/docker.webp" /> Docker and <img class="home__logo"  src="@/assets/logos/google_cloud.svg" /> Google
           Cloud Platform
-        </h4>
+        </a>
       </footer>
     </div>
   </div>
@@ -223,6 +223,8 @@
     display: flex;
     place-content: center;
     font-size: small;
+    text-decoration: underline;
+    font-family: sans-serif;
   }
 
   .home__logo{
